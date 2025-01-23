@@ -7,6 +7,6 @@ FROM mysql:8.0
 
 COPY ./config/my.cnf /etc/my.cnf
 
-# COPY ./init/ /docker-entrypoint-initdb.d/
+COPY ./init/ /docker-entrypoint-initdb.d/
 
 COPY --from=debug /bin/ping /bin/ping

@@ -19,8 +19,12 @@
 CREATE DATABASE IF NOT EXISTS `lunch_ordering` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `lunch_ordering`;
 
--- CREATE USER 'replica_user'@'%' IDENTIFIED BY '12345';
--- GRANT REPLICATION SLAVE ON *.* TO 'replica_user'@'%';
--- FLUSH PRIVILEGES;
+CHANGE MASTER TO
+  MASTER_HOST = 'master', -- Use the master container's hostname or IP
+  MASTER_USER = 'replica_user', -- Replication user created on master
+  MASTER_PASSWORD = '12345', -- Replication user password
+  MASTER_LOG_FILE = 'mysql-bin.000003', -- Binary log file from the master (e.g. mysql-bin.000001)
+  MASTER_LOG_POS = 157; -- Log position from the master (e.g. 12345)
 
--- FLUSH TABLES WITH READ LOCK;
+-- Start the replication:
+START SLAVE;

@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  master:
+    build: 
+      context: ./master/
+    image: master
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+    container_name: master
+    ports:
+      - 3301:3306
+    # volumes:
+    #   - /srv/docker/volumes/master:/var/lib/mysql
+  slave:
+    build: 
+      context: ./slave/
+    image: slave
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+    container_name: slave
+    ports:
+      - 3302:3306
+    # volumes:
+    #   - /srv/docker/volumes/slave:/var/lib/mysql
+  
+
+
+
